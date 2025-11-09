@@ -1,0 +1,28 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "./",
+    "esModuleInterop": true,
+    "outDir": "./dist",
+    // Environment Settings
+    // See also https://aka.ms/tsconfig/module
+  "forceConsistentCasingInFileNames": true,
+    "allowUnusedLabels": false,
+    "strict": true,
+    "target": "ES6",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": [
+      "ESNext"
+    ],
+    // "typeRoots": [
+    //   "./types",
+    //   "./node_modules/@types",
+    //   "./app/interface/type.d.ts",
+    //   "./app/interface/global.d.ts"
+    // ]
+  },
+  "include": ["app/**/*.ts", "app.ts"]
+
+}

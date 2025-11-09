@@ -1,0 +1,72 @@
+{
+  "swaggerDefinition": {
+    "swagger": "2.0",
+    "info": {
+      "title": "Student Management API",
+      "version": "1.0.0",
+      "description": "API documentation for managing students and teachers",
+      "contact": {
+        "name": "Pabitra Barik",
+        "email": "pabitra@example.com"
+      }
+    },
+    "host": "localhost:5001",
+    "schemes": ["http"],
+    "securityDefinitions": {
+      "bearerAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\""
+      }
+    },
+    "tags": [
+      {
+        "name": "Student",
+        "description": "Endpoints related to student operations"
+      },
+      {
+        "name": "Teacher",
+        "description": "Endpoints related to teacher operations"
+      },
+      {
+        "name": "Auth",
+        "description": "User authentication endpoints"
+      },
+      {
+        "name": "Course",
+        "description": "Endpoints related to course management"
+      },
+      {
+        "name": "Batch",
+        "description": "Endpoints related to batch management"
+      },
+      {
+        "name": "Enrollment",
+        "description": "Endpoints related to student enrollments"
+      },
+      {
+        "name": "Attendance",
+        "description": "Endpoints related to attendance management"
+      },
+      {
+        "name": "Exam",
+        "description": "Endpoints related to exam management"
+      },
+      {
+        "name": "Exam Result",
+        "description": "Endpoints related to exam results and performance"
+      },
+      {
+      "name": "Reports",
+      "description": "Analytics and performance reporting endpoints"
+    },
+    {
+      "name":"[Dashboard]",
+     " description":" Retrieve dashboard data specifically for students,teacher,Admin"
+
+    }
+    ]
+  },
+  "apis": ["./app/router/*.ts"]
+}
