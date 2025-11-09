@@ -11,6 +11,19 @@ const Dashboardrouter = Router();
 
 /**
  * @swagger
+ * definitions:
+ *   ApiResponse:
+ *     type: object
+ *     properties:
+ *       success:
+ *         type: boolean
+ *       message:
+ *         type: string
+ *       dashboard:
+ *         type: object
+ */
+/**
+ * @swagger
  * /api/dashboard/student:
  *   get:
  *     summary: Get student dashboard

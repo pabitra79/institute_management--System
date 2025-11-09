@@ -3,6 +3,7 @@ import Joi from 'joi';
 import { UserRepository } from "../repository/user.repo";
 import { hashPassword, comparePassword } from "../helper/password.helper";
 import { generateToken } from "../helper/jwt.helper"; 
+import { sendEmailVerification } from "../helper/mailverify.helper";
 
 const userRepo = new UserRepository();
 
@@ -37,10 +38,18 @@ export const SignupController = async (req: Request, res: Response) => {
             contactInfo,
             password: hashed,
             role: role || "student",
-            profilePicture: profilePicture || "default-avatar.png"
+            profilePicture: profilePicture || "default-avatar.png",
+            isEmailVerified: false //for emailverify
         });
 
         console.log("User created successfully:", user.email);
+        // send email
+        const emailResult = await sendEmailVerification(user);
+        
+        if (!emailResult.success) {
+            console.error("Failed to send verification email:", emailResult.error);
+            // Don't fail the signup, just log the error
+        }
         
         return res.status(201).json({ 
             success: true,
@@ -49,8 +58,10 @@ export const SignupController = async (req: Request, res: Response) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role
-            }
+                role: user.role,
+                isEmailVerified: user.isEmailVerified //for email verify
+            },
+            emailSent: emailResult.success
         });
         
     } catch (err: any) {
@@ -86,6 +97,18 @@ export const LoginController = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Invalid email or password" });
         }
 
+         //  Check if email is verified
+        if (!user.isEmailVerified) {
+            return res.status(403).json({
+                success: false,
+                message: "Please verify your email before logging in. Check your inbox for verification link.",
+                needsVerification: true,
+                email: user.email
+
+            });
+        }
+
+
         // Generate JWT token using your existing helper
         const token = generateToken({
             userId: user._id.toString(),
@@ -101,7 +124,8 @@ export const LoginController = async (req: Request, res: Response) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                isEmailVerified: user.isEmailVerified //for check email
             }
         });
 

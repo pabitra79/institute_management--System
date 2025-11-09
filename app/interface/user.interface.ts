@@ -8,7 +8,7 @@ export interface IUser extends Document {
     role: 'student' | 'teacher' | 'admin';
     profilePicture: string;
     contactInfo: string;
-    isEmailVerified: boolean;
+    isEmailVerified?: boolean;
     emailVerificationToken?: string;
     emailVerificationExpires?: Date;
     createdBy?: ObjectId; // Add this field

@@ -12,6 +12,9 @@ export class UserRepository {
         role: string; // Change to string
         contactInfo: string;
         profilePicture?: string;
+        isEmailVerified?: boolean; 
+        emailVerificationToken?: string; 
+        emailVerificationExpires?: Date; 
     }): Promise<IUserDocument> {
         const user = new UserModel({
             ...userData,
@@ -28,7 +31,7 @@ export class UserRepository {
     async findById(id: string): Promise<IUserDocument | null> {
         return await UserModel.findById(id);
     }
-     async createTeacher(teacherData: {
+    async createTeacher(teacherData: {
         name: string;
         email: string;
         password: string;
@@ -65,4 +68,30 @@ export class UserRepository {
             { new: true }
         ).select('-password');
     }
+    async verifyUserEmail(userId: string) {
+        try {
+            const updatedUser = await UserModel.findByIdAndUpdate(
+                userId,
+                { 
+                    $set: { 
+                        isEmailVerified: true,
+                        emailVerificationToken: null,
+                        emailVerificationExpires: null
+                    } 
+                },
+                { new: true }
+            ).select("-password");
+// for email verify
+            if (!updatedUser) {
+                throw new Error("User not found during email verification");
+            }
+
+
+            return updatedUser;
+        } catch (error) {
+            console.error("Verify user email error:", error);
+            throw error;
+        }
+    }
+
 }

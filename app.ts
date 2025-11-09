@@ -44,7 +44,8 @@ import {Dashboardrouter} from "./app/router/dashboard.router"
 app.use("/api",Dashboardrouter)
 import { Userrouter } from "./app/router/user.router";
 app.use("/api", Userrouter);
-
+import { Verificationrouter } from "./app/router/verification.router";
+app.use("/api",Verificationrouter);
 
 app.listen(5001,()=>{
     console.log("Server port is 5001")

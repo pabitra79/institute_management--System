@@ -27,9 +27,7 @@ export const sendEmailVerification = async (user: IUser & { save?: () => Promise
       console.log(" Verification token saved to user");
     }
     
-    const verificationUrl = `${process.env.EMAIL_LINK || "http://localhost:5001"}/verify-email?token=${verificationToken}&email=${user.email}`;
-    console.log("🔗 Verification URL:", verificationUrl);
-
+  const verificationUrl = `${process.env.EMAIL_LINK || "http://localhost:5001"}/api/verify-email?token=${verificationToken}&email=${user.email}`;
     const websiteName = "Institute Management";
     const fromEmail = process.env.EMAIL_FROM;
 
